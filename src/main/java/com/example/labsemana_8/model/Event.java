@@ -1,6 +1,6 @@
 package com.example.labsemana_8.model;
 
-import com.example.labsemana_8.enums.Status;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,29 +8,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
-
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
-public class Member {
-
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private LocalDate date;
 
-    private LocalDate renewalDate;
+    private Integer duration;
 
-    @ManyToOne//un miembro puede pertenecer a varias divisiones
-    @JoinColumn(name="division_id")
-    private Division division;
+    private String location;
 
+    @OneToMany(mappedBy = "event")
+    private List <Guest> guests;
 }

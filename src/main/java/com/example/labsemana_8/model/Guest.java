@@ -1,14 +1,11 @@
 package com.example.labsemana_8.model;
 
-import com.example.labsemana_8.enums.Status;
+import com.example.labsemana_8.enums.StatusGuest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-
 
 @Getter
 @Setter
@@ -16,8 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 
 @Entity
-public class Member {
-
+public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,12 +21,11 @@ public class Member {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusGuest statusGuest;
 
-    private LocalDate renewalDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="event_id")
+    private Event event;
 
-    @ManyToOne//un miembro puede pertenecer a varias divisiones
-    @JoinColumn(name="division_id")
-    private Division division;
 
 }

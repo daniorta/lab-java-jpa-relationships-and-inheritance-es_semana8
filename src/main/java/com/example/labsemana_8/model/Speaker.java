@@ -1,14 +1,13 @@
 package com.example.labsemana_8.model;
 
-import com.example.labsemana_8.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 
 @Entity
-public class Member {
+public class Speaker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +23,12 @@ public class Member {
 
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private Integer presentationDuration;
 
-    private LocalDate renewalDate;
-
-    @ManyToOne//un miembro puede pertenecer a varias divisiones
-    @JoinColumn(name="division_id")
-    private Division division;
+    //Mapeamos el onetomany de speaker
+    @ManyToMany(mappedBy = "speakers", fetch = FetchType.LAZY)
+    private List<Conference> conferences;
 
 }
+
+
